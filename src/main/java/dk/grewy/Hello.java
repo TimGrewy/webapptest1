@@ -13,27 +13,29 @@ import javax.ws.rs.Produces;
 import java.io.IOException;
 
 /**
- * Lav et build via en cmd og 'mvn package'
- * Copier war fra target folderen til Jetty mappen (omdøb evt til root.war)
+ * Lav et build via batch scriptet buildAndDeploy.bat (antaget at stierne er rigtige - ellers ret dem!)
+ *
  */
 @Path("")
 public class Hello {
 
-    public static final String ON_XML = "<YAMAHA_AV cmd=\"PUT\">\n" +
+    private static final String ON_XML = "<YAMAHA_AV cmd=\"PUT\">\n" +
             "   <Zone_2>\n" +
             "      <Power_Control>\n" +
             "         <Power>On</Power>\n" +
             "      </Power_Control>\n" +
             "   </Zone_2>\n" +
             "</YAMAHA_AV>";
-    public static final String OFF_XML = "<YAMAHA_AV cmd=\"PUT\">\n" +
+    private static final String OFF_XML = "<YAMAHA_AV cmd=\"PUT\">\n" +
             "   <Zone_2>\n" +
             "      <Power_Control>\n" +
             "         <Power>Standby</Power>\n" +
             "      </Power_Control>\n" +
             "   </Zone_2>\n" +
             "</YAMAHA_AV>";
-    public static String url = "http://10.0.0.2/YamahaRemoteControl/ctrl";
+    private static String url = "http://10.0.0.2/YamahaRemoteControl/ctrl";
+
+
 
     @GET
     @Produces("text/html")
