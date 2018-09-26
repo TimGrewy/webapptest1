@@ -1,0 +1,41 @@
+<html>
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+
+<div id="app">
+    {{ message }}
+</div>
+<div id="app-4">
+    <ol>
+        <li v-for="title in titles">
+            {{ title.text }}
+        </li>
+    </ol>
+</div>
+<div id="app-5">
+    <p>{{ message }}</p>
+    <button v-on:click="reverseMessage">Reverse Message</button>
+</div>
+<div id="app-6">
+    <p>{{ message }}</p>
+    <input v-model="message">
+</div>
+<div id="app-7">
+    app7
+    {{ message }}
+</div>
+<script src="index.js"></script>
+</body>
+</html>
+
+
+
+
+
+[
+{ text: 'Learn JavaScript' },
+{ text: 'Learn Vue' },
+{ text: 'Build something awesome' }
+]

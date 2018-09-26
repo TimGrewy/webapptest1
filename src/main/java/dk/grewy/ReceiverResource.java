@@ -17,7 +17,7 @@ import java.io.IOException;
  *
  */
 @Path("")
-public class Hello {
+public class ReceiverResource {
 
     private static final String ON_XML = "<YAMAHA_AV cmd=\"PUT\">\n" +
             "   <Zone_2>\n" +
@@ -33,6 +33,21 @@ public class Hello {
             "      </Power_Control>\n" +
             "   </Zone_2>\n" +
             "</YAMAHA_AV>";
+    private static final String PARTYMODE_ON_XML = "<YAMAHA_AV cmd=\"PUT\">" +
+                "<System>" +
+                    "<Party_Mode>" +
+                        "<Mode>On</Mode>" +
+                    "</Party_Mode>" +
+                "</System>" +
+            "</YAMAHA_AV>";
+    private static final String PARTYMODE_OFF_XML = "<YAMAHA_AV cmd=\"PUT\">" +
+                "<System>" +
+                    "<Party_Mode>" +
+                        "<Mode>Off</Mode>" +
+                    "</Party_Mode>" +
+                "</System>" +
+            "</YAMAHA_AV>";
+
     private static String url = "http://10.0.0.2/YamahaRemoteControl/ctrl";
 
 
@@ -49,6 +64,19 @@ public class Hello {
     @Path("off")
     public String turnOff () throws Exception {
         return doHttpToReciever(OFF_XML);
+    }
+    @GET
+    @Produces("text/html")
+    @Path("partyon")
+    public String turnPartyOn () throws Exception {
+        return doHttpToReciever(PARTYMODE_ON_XML);
+    }
+
+    @GET
+    @Produces("text/html")
+    @Path("partyoff")
+    public String turnPartyOff () throws Exception {
+        return doHttpToReciever(PARTYMODE_OFF_XML);
     }
 
     private String doHttpToReciever(String xml) throws IOException {

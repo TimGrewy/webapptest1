@@ -1,23 +1,12 @@
 package dk.grewy;
-import org.apache.http.HttpEntity;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
-import org.apache.http.util.EntityUtils;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import java.io.IOException;
+import javax.ws.rs.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.nio.file.StandardOpenOption;
+import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * Lav et build via batch scriptet buildAndDeploy.bat (antaget at stierne er rigtige - ellers ret dem!)
@@ -25,16 +14,45 @@ import java.util.stream.Stream;
  */
 @Path("scanner")
 public class ScannerResource {
-
+    //private static String fileName = "////gnas//downloads//WebScanner//TargetTitles.txt";
+    private static String fileName = "c://A//TargetTitles.txt";
 
     @GET
     @Produces("application/json")
     @Path("list")
-    public List<Object> test() throws Exception {
-        String fileName = "////gnas//downloads//WebScanner//TargetTitles.txt";
+    public List<String> list() throws Exception {
         return Files.lines(Paths.get(fileName)).collect(Collectors.toList());
     }
 
+    @POST
+    @Path("title")
+    public void addTitle(String value) throws Exception {
+        if (list().contains(value)) {
+            return;
+        }
+        Files.write(Paths.get(fileName), (value + "\n").getBytes("UTF-8"), StandardOpenOption.CREATE,StandardOpenOption.APPEND);
+    }
 
+
+    @DELETE
+    @Path("title/{value}")
+    public void deleteTitle(@PathParam("value") String value) throws Exception {
+        System.out.println("Deleting: '" + value + "'");
+        List<String> list = list();
+        boolean removed = removeFromList(list, value);
+        System.out.println("Removed: " + removed + ". New list: " + list);
+        Files.write(Paths.get(fileName), list, StandardOpenOption.WRITE, StandardOpenOption.TRUNCATE_EXISTING);
+    }
+
+    private boolean removeFromList(List<String> list, String value) {
+        for (Iterator<String> iter = list.listIterator(); iter.hasNext(); ) {
+            String a = iter.next();
+            if (a.trim().equals(value)) {
+                iter.remove();
+                return true;
+            }
+        }
+        return false;
+    }
 
 }
