@@ -11,7 +11,9 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
@@ -27,16 +29,16 @@ public class JBFrokostResource {
     private static String fileName = "c://A//Frokost.txt";
 
     @GET
-    @Produces("text/plain")
+    @Produces(MediaType.TEXT_PLAIN + ";charset=UTF-8")
     @Path("")
     public String getFrokost() throws Exception {
-        return Files.lines(Paths.get(fileName)).collect(Collectors.joining());
+        return Files.lines(Paths.get(fileName), Charset.forName("ISO-8859-1")).collect(Collectors.joining());
     }
 
     @POST
     @Path("")
     public void saveFrokost(String value) throws Exception {
-        Files.write(Paths.get(fileName), (value + "\n").getBytes("UTF-8"), StandardOpenOption.CREATE,StandardOpenOption.APPEND);
+        Files.write(Paths.get(fileName), (value + "\n").getBytes("ISO-8859-1"), StandardOpenOption.CREATE,StandardOpenOption.TRUNCATE_EXISTING);
     }
 
 }

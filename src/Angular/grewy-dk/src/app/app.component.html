@@ -1,0 +1,24 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<div style="text-align:center">
+  <h1>
+    Welcome to List thingy!
+  </h1>
+  <ul class="heroes">
+    <li *ngFor="let title of titles">
+      <span>{{title}}</span>
+      <button class="delete" title="delete hero" (click)="delete(title)">x</button>
+    </li>
+  </ul>
+  <div>
+    <label>Titel:
+      <input [(ngModel)]="newTitle" placeholder="newTitle">
+    </label>
+    x: {{newTitle}}
+  </div>
+  <button (click)="add(newTitle); newTitle=''">
+    add
+  </button>
+
+
+</div>
+
