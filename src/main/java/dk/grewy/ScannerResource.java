@@ -29,7 +29,7 @@ public class ScannerResource {
     public Response list() throws Exception {
         System.out.println("list");
         List<String> collect = getList();
-        return Response.ok(collect)/*.header("Access-Control-Allow-Origin", "*")*/.build();
+        return Response.ok(collect).header("Access-Control-Allow-Origin", "*").build();
     }
 
     @POST
@@ -40,10 +40,10 @@ public class ScannerResource {
             return Response.noContent().build();
         }
         Files.write(Paths.get(fileName), (value + "\n").getBytes("UTF-8"), StandardOpenOption.CREATE,StandardOpenOption.APPEND);
-        return Response.noContent()/*.header("Access-Control-Allow-Origin", "*")*/.build();
+        return Response.ok(value).header("Access-Control-Allow-Origin", "*").build();
     }
 
-/*    @OPTIONS
+    @OPTIONS
     //@Path("title")
     @Path("{path : .*}")
     public Response options() throws Exception {
@@ -53,7 +53,7 @@ public class ScannerResource {
                 .header("Access-Control-Allow-Methods","GET, POST, OPTIONS, DELETE, PUT")
                 .header("Access-Control-Allow-Headers","origin, content-type, accept, authorization")
                 .build();
-    }*/
+    }
 
     @DELETE
     @Path("title/{value}")

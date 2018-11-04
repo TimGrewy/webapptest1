@@ -16,6 +16,8 @@ import { catchError, map, tap } from 'rxjs/operators';
 export class TitleService {
   private listUrl = 'http://localhost/rest/scanner/list';  // URL to web api
   private titleUrl = 'http://localhost/rest/scanner/title';  // URL to web api
+  private listUrlProd = '/rest/scanner/list';  // URL to web api prod
+  private titleUrlProd = '/rest/scanner/title';  // URL to web api prod
 
   //******************************************************************
   //CONSTRUCTOR
@@ -26,7 +28,7 @@ export class TitleService {
     //PUBLIC METHODS
     //******************************************************************
     getTitles (): Observable<Object[]> {
-      return this.http.get<Object[]>(this.listUrl)
+      return this.http.get<Object[]>(this.listUrlProd)
           .pipe(
               catchError(this.handleError('getTitle', []))
             );
@@ -34,7 +36,7 @@ export class TitleService {
 
     /** POST: add a new hero to the server */
     addTitle (title): Observable<Object> {
-      return this.http.post(this.titleUrl, title, httpOptionsPost)
+      return this.http.post(this.titleUrlProd, title, httpOptionsPost)
           .pipe(
             catchError(this.handleError<Object>('addTitle'))
           );
@@ -42,7 +44,7 @@ export class TitleService {
 
     /** POST: add a new hero to the server */
     deleteTitle (title): Observable<Object> {
-      return this.http.delete(this.titleUrl + "/" + title, httpOptionsPost)
+      return this.http.delete(this.titleUrlProd + "/" + title, httpOptionsPost)
           .pipe(
             catchError(this.handleError<Object>('deleteTitle'))
           );

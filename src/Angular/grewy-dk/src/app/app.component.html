@@ -6,14 +6,13 @@
   <ul class="heroes">
     <li *ngFor="let title of titles">
       <span>{{title}}</span>
-      <button class="delete" title="delete hero" (click)="delete(title)">x</button>
+      <button class="delete" title="delete title" (click)="delete(title)">x</button>
     </li>
   </ul>
   <div>
     <label>Titel:
       <input [(ngModel)]="newTitle" placeholder="newTitle">
     </label>
-    x: {{newTitle}}
   </div>
   <button (click)="add(newTitle); newTitle=''">
     add

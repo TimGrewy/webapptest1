@@ -35,7 +35,7 @@ export class AppComponent {
     delete(title: string): void {
       title = title.trim();
       if (!title) { return; }
-      this.titleService.deleteTitle(name).subscribe();
+      this.titleService.deleteTitle(title).subscribe();
       this.titles = this.titles.filter(h => h !== title);
     }
 }
